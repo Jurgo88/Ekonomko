@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { parseISO, isWithinInterval, subMonths, startOfMonth } from 'date-fns'
+import { parseISO, isWithinInterval, subMonths, startOfMonth, endOfMonth } from 'date-fns'
 import { supabase } from '@/lib/supabase'
 import { useHouseholdStore } from '@/stores/household'
 import { useCategoriesStore } from '@/stores/categories'
@@ -108,5 +108,29 @@ export function useBudgetStats() {
     })
   })
 
-  return { items, loading, error, fetch, kpi, byCategory, monthly }
+  const kpiPrev = computed<Kpi>(() => {
+    const prev = subMonths(new Date(), 1)
+    const range = { start: startOfMonth(prev), end: endOfMonth(prev) }
+    let income = 0
+    let expense = 0
+    for (const t of items.value) {
+      if (!isWithinInterval(parseISO(t.date), range)) continue
+      if (t.type === 'income') income += Number(t.amount)
+      else if (t.type === 'expense') expense += Number(t.amount)
+    }
+    return { income, expense, balance: income - expense }
+  })
+
+  const savingsRate = computed<number | null>(() => {
+    const { income, expense } = kpi.value
+    if (income === 0) return null
+    return ((income - expense) / income) * 100
+  })
+
+  const txCount = computed(() => {
+    const range = { start: startOfCurrentMonth(), end: endOfCurrentMonth() }
+    return items.value.filter((t) => isWithinInterval(parseISO(t.date), range)).length
+  })
+
+  return { items, loading, error, fetch, kpi, kpiPrev, savingsRate, txCount, byCategory, monthly }
 }

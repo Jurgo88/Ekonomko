@@ -13,8 +13,13 @@ import {
   Wallet,
   Settings,
   LogOut,
+  Sun,
+  Moon,
 } from 'lucide-vue-next'
+import { useTheme } from '@/composables/useTheme'
 import { useAuth } from '@/composables/useAuth'
+
+const { isDark, toggleDark } = useTheme()
 
 const { user, signOut } = useAuth()
 const router = useRouter()
@@ -141,10 +146,19 @@ const drawerItems = [
         </RouterLink>
       </nav>
 
-      <div class="border-t p-3 space-y-2">
+      <div class="border-t p-3 space-y-1">
         <p class="px-2 text-xs text-muted-foreground truncate" :title="user?.email ?? ''">
           {{ user?.email }}
         </p>
+        <button
+          type="button"
+          class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          @click="toggleDark"
+        >
+          <Sun v-if="isDark" class="h-4 w-4" />
+          <Moon v-else class="h-4 w-4" />
+          {{ isDark ? 'Svetlý režim' : 'Tmavý režim' }}
+        </button>
         <button
           type="button"
           class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"

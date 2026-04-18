@@ -44,6 +44,16 @@
     --ring: 212.7 26.8% 83.9%;
   }
 
+  :root {
+    --echarts-text: #475569;
+    --echarts-line: #e2e8f0;
+  }
+
+  .dark {
+    --echarts-text: #94a3b8;
+    --echarts-line: #1e293b;
+  }
+
   * {
     @apply border-border;
   }
