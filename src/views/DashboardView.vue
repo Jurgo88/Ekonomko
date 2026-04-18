@@ -129,6 +129,23 @@ const selectedMonthCategories = computed(() => {
     .slice(0, 5)
 })
 
+const pieData = computed(() => {
+  if (selectedMonthIdx.value === null) return byCategory.value
+  const range = monthRanges[selectedMonthIdx.value]
+  const sums = new Map<string | null, number>()
+  for (const t of items.value) {
+    if (t.type !== 'expense') continue
+    if (!isWithinInterval(parseISO(t.date), { start: range.start, end: range.end })) continue
+    sums.set(t.category_id, (sums.get(t.category_id) ?? 0) + Number(t.amount))
+  }
+  return [...sums.entries()]
+    .map(([id, amount]) => ({
+      name: id ? categoriesStore.byId.get(id)?.name ?? 'Bez kategórie' : 'Bez kategórie',
+      amount,
+    }))
+    .sort((a, b) => b.amount - a.amount)
+})
+
 // Trend vs previous month
 function calcTrend(
   current: number,
@@ -454,9 +471,11 @@ const totalNetWorth = computed(() =>
         <div class="rounded-xl border bg-card p-5">
           <div class="mb-4">
             <h2 class="text-sm font-semibold">Výdavky podľa kategórií</h2>
-            <p class="text-xs text-muted-foreground mt-0.5">Tento mesiac</p>
+            <p class="text-xs text-muted-foreground mt-0.5">
+              {{ selectedMonthIdx !== null ? monthly[selectedMonthIdx].label : 'Tento mesiac' }}
+            </p>
           </div>
-          <CategoryPieChart :data="byCategory" />
+          <CategoryPieChart :data="pieData" />
         </div>
       </div>
 
