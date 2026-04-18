@@ -1,0 +1,73 @@
+# ============================================================
+# Netlify config — Rozpočet (Vue 3 + Vite SPA/PWA)
+# ============================================================
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Vite expects a recent Node LTS; Netlify defaults may lag.
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# ------------------------------------------------------------
+# SPA fallback — všetky neexistujúce cesty idú na index.html,
+# okrem service workera a manifestu (tie sa servírujú priamo).
+# ------------------------------------------------------------
+[[redirects]]
+  from = "/sw.js"
+  to = "/sw.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/manifest.webmanifest"
+  to = "/manifest.webmanifest"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ------------------------------------------------------------
+# Caching — aggressive pre hash-náboje, no-cache pre SW a HTML
+# ------------------------------------------------------------
+
+# Service Worker musí byť vždy čerstvý — inak dostávaš zaseknuté verzie.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Service-Worker-Allowed = "/"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/manifest+json"
+
+# Hashed JS/CSS Vite buildu — immutable na rok
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Ikony môžu byť v cache dlhšie
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# ------------------------------------------------------------
+# Security headers
+# ------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"

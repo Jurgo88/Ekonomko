@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0f172a"/>
+  <text x="50%" y="44%" dominant-baseline="central" text-anchor="middle"
+        font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-weight="700" font-size="300" fill="#ffffff">€</text>
+  <rect x="120" y="370" width="64"  height="48"  rx="10" fill="#16a34a"/>
+  <rect x="224" y="340" width="64"  height="78"  rx="10" fill="#22c55e"/>
+  <rect x="328" y="300" width="64"  height="118" rx="10" fill="#4ade80"/>
+</svg>
