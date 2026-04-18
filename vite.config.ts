@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       injectRegister: false, // my vlastný register vo `src/pwa.ts`
       includeAssets: [
         'favicon.svg',
@@ -69,7 +69,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//, /^\/auth\//],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        skipWaiting: false, // prompt-based update handled by pwa.ts
+        skipWaiting: true,
         runtimeCaching: [
           {
             // Supabase API — network first, s krátkym fallbackom
