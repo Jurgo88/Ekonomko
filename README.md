@@ -1,4 +1,4 @@
-# Rozpočet
+# Ekonomko
 
 Web + PWA aplikácia na sledovanie rodinného rozpočtu — príjmy, výdavky, účty, kategórie, opakované platby, mesačné rozpočty a štatistiky s grafmi. Slovenské UI, podpora viacerých domácností s RLS izoláciou.
 

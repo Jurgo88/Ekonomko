@@ -35,7 +35,7 @@ async function onLogout() {
     class="hidden md:flex md:w-60 lg:w-64 shrink-0 flex-col border-r bg-card text-card-foreground"
   >
     <div class="px-5 py-5 border-b">
-      <h1 class="text-lg font-semibold tracking-tight">Rozpočet</h1>
+      <h1 class="text-lg font-semibold tracking-tight">Ekonomko</h1>
       <p class="text-xs text-muted-foreground mt-0.5">Rodinné financie</p>
     </div>
 

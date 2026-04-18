@@ -16,9 +16,9 @@ export default defineConfig({
         'offline.html',
       ],
       manifest: {
-        name: 'Rozpočet',
-        short_name: 'Rozpočet',
-        description: 'Rodinný rozpočet — príjmy, výdavky a štatistiky pre vašu domácnosť.',
+        name: 'Ekonomko',
+        short_name: 'Ekonomko',
+        description: 'Ekonomko — príjmy, výdavky a štatistiky pre vašu domácnosť.',
         lang: 'sk',
         dir: 'ltr',
         start_url: '/',

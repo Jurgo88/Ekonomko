@@ -56,7 +56,7 @@ async function onSubmit() {
     <div class="w-full max-w-sm space-y-6 rounded-lg border bg-card p-6 shadow-sm">
       <header class="space-y-1 text-center">
         <h1 class="text-2xl font-semibold tracking-tight">{{ title }}</h1>
-        <p class="text-sm text-muted-foreground">Rodinný rozpočet</p>
+        <p class="text-sm text-muted-foreground">Ekonomko</p>
       </header>
 
       <form class="space-y-4" @submit.prevent="onSubmit">
